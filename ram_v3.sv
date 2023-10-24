@@ -2,8 +2,7 @@
 **     Author: Engineer Youssef Nasser                   **
 **     Simple RAM Module Implementation                  **
 **     Async reset and Sync Write and Read Operation     **
-**     Diploma: Sherif Hosny                             **
-**     Copyright (c) 2023, R10                      	 **
+**     Copyright (c) 2023                             	 **
 **     All rights reserved.                         	 **
 **********************************************************/
 
