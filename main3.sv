@@ -1,9 +1,8 @@
 /*********************************************************
 **     Author: Engineer Youssef Nasser                  **
 **     Classical Testbench using Classes for RAM Module **
-**     Diploma: Sherif Hosny                            **
-**     Copyright (c) 2023, R10                      	**
-**     All rights reserved.                         	**
+**     Copyright (c) 2023.                            	**
+**     All rights reserved.                           	**
 *********************************************************/
 package youssef;
   parameter clk_period = 10;
