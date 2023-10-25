@@ -4,6 +4,8 @@
 **     Copyright (c) 2023.                            	**
 **     All rights reserved.                           	**
 *********************************************************/
+
+
 package youssef;
   parameter clk_period = 10;
 
@@ -171,7 +173,9 @@ package youssef;
 
     covergroup cross_grp();
     cv1: coverpoint t2.data_out;
-    cv2: coverpoint t2.valid_out;
+    cv2: coverpoint t2.valid_out {
+      bins bin1[1] = {1};
+    }
     cross cv1, cv2;
     endgroup
 
@@ -345,8 +349,8 @@ module tb3;
     $dumpvars;
   end
 
-  int iterations_WRITE = 20;
-  int iterations_READ = 20;
+  int iterations_WRITE = 1000;
+  int iterations_READ = 500;
   initial begin
     env = new(intf);
     env.RAM_reset;
@@ -361,6 +365,10 @@ module tb3;
   end
 
   final begin
+    env.errorss();
+    $display("number of transactions is %0d", i);
+  end
+endmodule
     env.errorss();
     $display("number of transactions is %0d", i);
   end
