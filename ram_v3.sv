@@ -1,10 +1,10 @@
-/**********************************************************
-**     Author: Engineer Youssef Nasser                   **
-**     Simple RAM Module Implementation                  **
-**     Async reset and Sync Write and Read Operation     **
-**     Copyright (c) 2023                             	 **
-**     All rights reserved.                         	 **
-**********************************************************/
+/*************************************************************
+**     Author: Engineer Youssef Nasser                      **
+**     Inferred Single-Port Memory Class-Based Verification **                 
+**     Sync reset and Sync Write and Read Operation         **
+**     Copyright (c) 2023                             	    **
+**     All rights reserved.                         	    **
+************************************************************/
 
 module ram_v3 (
     input logic [7:0] data_in,    // Data input (8 bits)
