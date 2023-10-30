@@ -369,7 +369,3 @@ module tb3;
     $display("number of transactions is %0d", i);
   end
 endmodule
-    env.errorss();
-    $display("number of transactions is %0d", i);
-  end
-endmodule
