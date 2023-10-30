@@ -1,9 +1,9 @@
 /*************************************************************
 **     Author: Engineer Youssef Nasser                      **
 **     Inferred Single-Port Memory Class-Based Verification **                 
-**     Async reset and Sync Write and Read Operation         **
+**     Async reset and Sync Write and Read Operation        **
 **     Copyright (c) 2023                             	    **
-**     All rights reserved.                         	    **
+**     All rights reserved.                         	      **
 ************************************************************/
 
 module ram_v3 (
