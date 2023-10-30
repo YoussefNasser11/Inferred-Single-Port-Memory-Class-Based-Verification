@@ -106,21 +106,23 @@ typedef class subscriber;
       endfunction
 
       task get_from_RAM();
-        // Task to get data from the RAM
-        @(negedge virtual_interface2.clk)
-        begin
-          if (virtual_interface2.valid_out) begin
-            t2.data_out <= virtual_interface2.data_out;
-            t2.valid_out <= virtual_interface2.valid_out;
-            t2.data_in <= virtual_interface2.data_in;
-            t2.WE <= virtual_interface2.WE;
-            t2.RE <= virtual_interface2.RE;
-            t2.addr <= virtual_interface2.addr;
-            t2.rst <= virtual_interface2.rst;
+        forever begin
+          // Task to get data from the RAM
+          @(negedge virtual_interface2.clk)
+          begin
+            if (virtual_interface2.valid_out) begin
+              t2.data_out <= virtual_interface2.data_out;
+              t2.valid_out <= virtual_interface2.valid_out;
+              t2.data_in <= virtual_interface2.data_in;
+              t2.WE <= virtual_interface2.WE;
+              t2.RE <= virtual_interface2.RE;
+              t2.addr <= virtual_interface2.addr;
+              t2.rst <= virtual_interface2.rst;
+            end
           end
-        end
 
-        $display("trans of monitor %0t %p", $time, t2);
+          //$display("trans of monitor %0t %p", $time, t2);
+        end
       endtask
 
       task checking(scoreboard arg2);
@@ -300,7 +302,7 @@ typedef class subscriber;
         // Task to generate write operations
         seq.Write();
         drv.Send_to_RAM(seq.t_in);
-        mon.get_from_RAM();
+        //mon.get_from_RAM();
         mon.hacker_write(covering);
       endtask
 
@@ -308,7 +310,7 @@ typedef class subscriber;
         // Task to generate read operations
         seq.Read();
         drv.Send_to_RAM(seq.t_in);
-        mon.get_from_RAM();
+        //mon.get_from_RAM();
         mon.hacker_read(covering);
         mon.checking(golden_model);
       endtask
@@ -337,6 +339,7 @@ typedef class subscriber;
 
     module tb3;
       `timescale 1ns/1ps
+      parameter reset_period =20;
       import youssef::*;
 
       environment env;
@@ -344,13 +347,18 @@ typedef class subscriber;
       ram_v3 dut(intf.data_in, intf.WE, intf.RE, intf.addr, intf.clk, intf.rst, intf.data_out, intf.valid_out);
       static int i;
 
+
       initial begin
-        $dumpfile("wave.vcd");
-        $dumpvars;
+        #reset_period;
+        fork 
+          env.mon.get_from_RAM;
+          env.errorss();   
+        join
       end
 
+
       int iterations_WRITE = 1000;
-      int iterations_READ = 500;
+      int iterations_READ = 256;
       initial begin
         env = new(intf);
         env.RAM_reset;
@@ -360,12 +368,14 @@ typedef class subscriber;
         for (i = 0; i < iterations_READ; i++) begin
           env.Read_Generator();
         end
-        #30;
-        $finish;
       end
 
-      final begin
-        env.errorss();
+      initial begin
+        $dumpfile("wave.vcd");
+        $dumpvars;
+        #((iterations_WRITE+iterations_READ)*11);
         $display("number of transactions is %0d", i);
+        $stop;
       end
+
     endmodule
